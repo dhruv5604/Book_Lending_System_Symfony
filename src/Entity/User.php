@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'user')]
     private Collection $loans;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Name = null;
+
     public function __construct()
     {
         $this->loans = new ArrayCollection();
@@ -143,5 +146,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserID()
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): static
+    {
+        $this->Name = $Name;
+
+        return $this;
     }
 }

@@ -39,11 +39,13 @@ class AppFixtures extends Fixture
 
         UserFactory::new()->create([
             'email' => "dhruvsolanki5604@gmail.com",
+            'name' => 'dhruv',
             'roles' => ['ROLE_USER']
         ]);
 
         UserFactory::new()->create([
             'email' => "dhruvsolanki5604admin@gmail.com",
+            'name' => 'admindhruv',
             'roles' => ['ROLE_LIBRARIAN']
         ]);
 

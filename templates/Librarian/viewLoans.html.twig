@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+
+    {% if is_granted('ROLE_LIBRARIAN') %}
+        <h2>All Loans</h2>
+        <a href="{{ path('app_dashboard') }}" class="btn btn-primary mb-2">Dashboard</a>
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Book Title</th>
+                    <th scope="col">Book Author</th>
+                    <th scope="col">Is Available</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">LoanAt</th>
+                    <th scope="col">ReturnedAT</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loans %}
+                    <tr>
+                        <td>{{ loan.id }}</td>
+                        <td>{{ loan.book.title }}</td>
+                        <td>{{ loan.book.author }}</td>
+                        <td>{{ loan.book.author }}</td>
+                        <td>{{ loan.user.name }}</td>
+                        <td>{{ loan.loanedAt ? loan.loanedAt|date('Y-m-d') : 'N/A' }}</td>
+                        <td>{{ loan.returnedAt ? loan.returnedAt|date('Y-m-d') : 'N/A' }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm mb-1">Edit</a>
+                            <a href="#" class="btn btn-primary btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">
+            You must be logged in with the <strong>Librarian</strong> role to view the book list.
+        </div>
+    {% endif %} 
+</div>
+{% endblock %}
