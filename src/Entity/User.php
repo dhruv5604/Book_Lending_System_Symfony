@@ -139,4 +139,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->plainPassword = null;
     }
+
+    public function getUserID()
+    {
+        return $this->id;
+    }
 }
