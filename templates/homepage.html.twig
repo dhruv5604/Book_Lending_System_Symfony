@@ -3,9 +3,35 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <h1>Welcome to homepage</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Welcome To Homepage</h1>
+
+    {% if is_granted('ROLE_USER') %}
+        <h2 class="mb-3">Available Books</h2>
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                     <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td>{{ book.id }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td><a href="#" class="btn btn-primary btn-sm">Borrow</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">
+            You must be logged in with the <strong>User</strong> role to view the book list.
         </div>
-    </div>
+    {% endif %}
+</div>
 {% endblock %}
