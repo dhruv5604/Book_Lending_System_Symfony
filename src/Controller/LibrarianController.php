@@ -67,13 +67,17 @@ class LibrarianController extends AbstractController
         }
 
         return $this->render('book/add.html.twig',[
-            "form" => $form->createView()
+            "form" => $form->createView(),
         ]);
     }
 
     #[Route('/delete/{id}', 'app_delete_book')]
     public function delete(Book $book, EntityManagerInterface $entityManager)
     {
+        foreach ($book->getLoans() as $loan) {
+            $entityManager->remove($loan);
+        }
+
         $entityManager->remove($book);
         $entityManager->flush();
 

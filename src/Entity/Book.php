@@ -22,7 +22,7 @@ class Book
     private ?string $author = null;
 
     #[ORM\Column]
-    private ?bool $isAvailable   = null;
+    private ?bool $isAvailable = null;
 
     /**
      * @var Collection<int, Loan>

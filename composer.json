@@ -81,6 +81,7 @@
     "require-dev": {
         "symfony/maker-bundle": "^1.63",
         "symfony/phpunit-bridge": "^7.2",
+        "symfony/web-profiler-bundle": "^7.0",
         "zenstruck/foundry": "^2.5"
     }
 }

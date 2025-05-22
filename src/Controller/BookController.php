@@ -7,6 +7,8 @@ use App\Repository\BookRepository;
 use App\Repository\LoanRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use LoanReturnedEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,24 +69,23 @@ class BookController extends AbstractController
     }
 
     #[Route('/returnBook/{id}', "app_return_book")]
-    public function returnBook($id, BookRepository $bookRepository, Security $security, EntityManagerInterface $entityManager, LoanRepository $loanRepository)
+    public function returnBook($id, BookRepository $bookRepository, Security $security, EntityManagerInterface $entityManager, LoanRepository $loanRepository,  EventDispatcherInterface $eventDispatcher)
     {
         $book = $bookRepository->find($id);
-        $book->setIsAvailable(1);
-
         $user = $security->getUser();
 
         $loan = $loanRepository->createQueryBuilder("q")
-                        ->where('q.book = :var1')
-                        ->andWhere('q.user = :var2')
+                        ->where('q.id = :var1')
                         ->setParameter('var1',$id)
-                        ->setParameter('var2', $user)
                         ->getQuery()
                         ->getOneOrNullResult();
-        
+
         $loan->setReturnedAt(new DateTime());
 
         $entityManager->flush();
+
+        $event = new LoanReturnedEvent($loan);
+        $eventDispatcher->dispatch($event, LoanReturnedEvent::NAME);
 
         return $this->redirectToRoute('app_view_borrowed_books',[
             'id' => $user->getId()

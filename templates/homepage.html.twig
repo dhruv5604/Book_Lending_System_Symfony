@@ -11,7 +11,8 @@
         <a href="{{ path('app_view_borrowed_books',{
             "id": app.user.id
         }) }}" class="btn btn-primary btn-sm mb-3">View Borrowed Books</a>
-        <table class="table table-striped table-hover shadow-sm">
+        <div {{ stimulus_controller('view-available-book') }}>
+        <table id="table1" class="table table-striped table-hover shadow-sm">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#ID</th>
@@ -33,6 +34,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     {% else %}
         <div class="alert alert-warning">
             You must be logged in with the <strong>User</strong> role to view the book list.

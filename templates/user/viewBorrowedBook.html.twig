@@ -7,7 +7,8 @@
     <h1 class="mb-4">Your Borrowed Books</h1>
 
     {% if borrowed_books is not empty %}
-        <table class="table table-bordered table-hover shadow-sm">
+        <div {{ stimulus_controller('view-available-book') }}>
+        <table id="table1" class="table table-bordered table-hover shadow-sm">
             <thead class="table-primary">
                 <tr>
                     <th>#ID</th>
@@ -23,17 +24,17 @@
                     {% for loan in book.loans %}
                         {% if loan.user.id == app.user.id %}
                             <tr>
-                                <td>{{ book.id }}</td>
+                                <td>{{ loan.id }}</td>
                                 <td>{{ book.title }}</td>
                                 <td>{{ book.author }}</td>
                                 <td>{{ loan.loanedAt ? loan.loanedAt|date('Y-m-d') : 'N/A' }}</td>
-                                <td>{{ loan.dueAt ? loan.dueAt|date('Y-m-d') : 'N/A' }}</td>
+                                <td>{{ loan.dueAt|days_left }}</td>
                                 <td>
                                     {% if loan.returnedAt %}
                                         {{ loan.returnedAt|date('Y-m-d') }}
                                     {% else %}
                                         <a href="{{ path('app_return_book',{
-                                            "id": book.id
+                                            "id": loan.id
                                         }) }}" class="btn btn-primary btn-sm">return</a>
                                     {% endif %}
                                 </td>
@@ -43,6 +44,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     {% else %}
         <div class="alert alert-info">You have not borrowed any books yet.</div>
     {% endif %}
