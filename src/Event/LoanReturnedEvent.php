@@ -15,7 +15,7 @@ class LoanReturnedEvent extends Event
     {
         $this->loan = $loan;
     }
-
+    
     public function getLoan()
     {
         return $this->loan;

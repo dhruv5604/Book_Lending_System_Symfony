@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Loan;
+use App\Event\LoanReturnedEvent as EventLoanReturnedEvent;
 use App\Repository\BookRepository;
 use App\Repository\LoanRepository;
 use DateTime;
@@ -84,9 +85,9 @@ class BookController extends AbstractController
 
         $entityManager->flush();
 
-        $event = new LoanReturnedEvent($loan);
-        $eventDispatcher->dispatch($event, LoanReturnedEvent::NAME);
-
+        $event = new EventLoanReturnedEvent($loan);
+        $eventDispatcher->dispatch($event, EventLoanReturnedEvent::NAME);
+        
         return $this->redirectToRoute('app_view_borrowed_books',[
             'id' => $user->getId()
         ]);

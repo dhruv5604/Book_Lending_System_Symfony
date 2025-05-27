@@ -28,7 +28,6 @@ class AppFixtures extends Fixture
                 ];
             });
 
-        // Create 5 ROLE_LIBRARIAN
         UserFactory::new()
             ->many(5)
             ->create(function () {

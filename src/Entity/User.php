@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $password;
-
+    
     private $plainPassword;
 
     #[ORM\Column(type: 'json')]

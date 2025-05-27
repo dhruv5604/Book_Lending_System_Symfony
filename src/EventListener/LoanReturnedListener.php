@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use App\Event\LoanReturnedEvent as EventLoanReturnedEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use LoanReturnedEvent;
 use Psr\Log\LoggerInterface;
@@ -17,7 +18,7 @@ class LoanReturnedListener
         $this->logger = $logger;
     }
 
-    public function onLoanReturned(LoanReturnedEvent $event): void
+    public function onLoanReturned(EventLoanReturnedEvent $event): void
     {
         $loan = $event->getLoan();
         $book = $loan->getBook();
