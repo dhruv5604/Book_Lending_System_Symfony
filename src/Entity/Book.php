@@ -97,7 +97,6 @@ class Book
     public function removeLoan(Loan $loan): static
     {
         if ($this->loans->removeElement($loan)) {
-            // set the owning side to null (unless already changed)
             if ($loan->getBook() === $this) {
                 $loan->setBook(null);
             }

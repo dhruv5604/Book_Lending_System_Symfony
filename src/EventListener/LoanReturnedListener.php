@@ -17,7 +17,7 @@ class LoanReturnedListener
         $this->em = $em;
         $this->logger = $logger;
     }
-
+    
     public function onLoanReturned(EventLoanReturnedEvent $event): void
     {
         $loan = $event->getLoan();

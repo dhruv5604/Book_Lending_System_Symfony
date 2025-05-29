@@ -27,6 +27,11 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'loan.returned', method: 'onLoanReturned' }
 
+    App\EventListener\OverdueLoanListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'loan.overdue', method: 'onOverdueLoan' }
+    # config/services.yaml
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
